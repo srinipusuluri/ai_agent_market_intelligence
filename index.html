@@ -98,6 +98,39 @@ select{background:#111a2b;border:1px solid var(--line);border-radius:10px;color:
 .disclaimer{max-width:760px}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-art{display:none}.cards{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.shell{padding:0 17px}.nav{display:none}.hero{padding:50px 0 30px}h1{font-size:46px}.cards,.insight-grid{grid-template-columns:1fr}.metrics{gap:8px}.metric{padding:14px}.metric strong{font-size:25px}.section-head{align-items:start;flex-direction:column}.footer{flex-direction:column}}
+
+/* Popularity visibility tiers and company annotations */
+.popularity-legend{display:flex;gap:9px;flex-wrap:wrap;align-items:center;padding:12px 14px;margin:4px 0 14px;background:#0e1625;border:1px solid var(--line);border-radius:12px}
+.legend-title{color:#b9c6dc;font-size:11px;font-weight:800;letter-spacing:.04em;margin-right:4px}
+.tier-pill{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:5px 9px;font-size:9px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;border:1px solid transparent;white-space:nowrap}
+.tier-pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.tier-high{color:#7ce7b2;background:#7ce7b212;border-color:#7ce7b245}
+.tier-moderate{color:#f5c779;background:#f5c77912;border-color:#f5c77945}
+.tier-low{color:#b7a0ff;background:#a78bfa14;border-color:#a78bfa48}
+.company.tier-high-card{border-color:#7ce7b238;background:linear-gradient(145deg,#142b2a,#0e1922)}
+.company.tier-moderate-card{border-color:#f5c77930}
+.company.tier-low-card{border-color:#a78bfa35;background:linear-gradient(145deg,#1b1930,#101522)}
+.company.tier-high-card:hover{border-color:#7ce7b2aa}
+.company.tier-moderate-card:hover{border-color:#f5c77999}
+.company.tier-low-card:hover{border-color:#a78bfa99}
+.card-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.annotation{margin:11px 0 13px;padding:9px 10px;border-left:2px solid var(--annotation,#69e2dc);background:#ffffff06;border-radius:0 8px 8px 0;color:#aebbd1;font-size:10px;line-height:1.5}
+.annotation b{color:#e7eefb;font-weight:750}
+.popularity-filter-wrap{margin:18px 0 12px;padding:13px 14px 14px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(120deg,#121c2d,#101726)}
+.filter-label{font-size:10px;font-weight:850;letter-spacing:.15em;color:#9cacc7;margin:0 0 10px 2px}
+.popularity-filter{display:flex;gap:9px;flex-wrap:wrap}
+.tier-filter-btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:#ffffff05;color:#b9c6dc;border-radius:10px;padding:9px 13px;font-size:12px;font-weight:750;cursor:pointer;transition:.18s}
+.tier-filter-btn .count{font-size:10px;opacity:.78;border-radius:99px;background:#ffffff12;padding:2px 7px;font-variant-numeric:tabular-nums}
+.tier-filter-btn:hover{transform:translateY(-1px);color:var(--text)}
+.tier-filter-btn.active{background:#ffffff0d;color:#fff;box-shadow:inset 0 0 0 1px currentColor}
+.tier-filter-btn[data-tier="high"].active{border-color:#7ce7b2;color:#7ce7b2;background:#7ce7b216}
+.tier-filter-btn[data-tier="moderate"].active{border-color:#f5c779;color:#f5c779;background:#f5c77916}
+.tier-filter-btn[data-tier="low"].active{border-color:#b7a0ff;color:#b7a0ff;background:#a78bfa18}
+.tier-filter-btn[data-tier="all"].active{border-color:#90a9d1;color:#e9f1ff;background:#90a9d118}
+.reset-btn{white-space:nowrap}
+.tier-summary{color:var(--muted);font-size:11px;margin:0 2px 11px}
+@media(max-width:600px){.popularity-legend{gap:7px}.legend-title{width:100%}.popularity-filter-wrap{padding:11px}.popularity-filter{display:grid;grid-template-columns:1fr 1fr}.tier-filter-btn{justify-content:space-between;padding:10px}.reset-btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -114,7 +147,7 @@ select{background:#111a2b;border:1px solid var(--line);border-radius:10px;color:
   <div>
     <div class="eyebrow">The agent economy, mapped</div>
     <h1>Who is building the <span class="gradient">agent future?</span></h1>
-    <p>A curated intelligence portal spanning frontier model labs, AI agents, enterprise platforms, AI clouds, inference providers, compute hardware, data foundations and the tooling that makes production AI possible.</p>
+    <p>A curated intelligence portal spanning frontier model labs, coding agents, AI app builders, enterprise copilots, data platforms, AI clouds, compute hardware, integration, observability and the tooling that makes production AI possible.</p>
     <div class="hero-actions">
       <a class="btn primary" href="#directory">Explore company directory ↗</a>
       <a class="btn" href="#landscape">View market landscape</a>
@@ -132,14 +165,26 @@ select{background:#111a2b;border:1px solid var(--line);border-radius:10px;color:
 
 <section id="directory">
   <div class="section-head">
-    <div><div class="eyebrow">Explore the ecosystem</div><h2>Company directory</h2><p>Search across model labs, agent builders, cloud providers, compute, data infrastructure and AI tooling. Cards link directly to official company websites.</p></div>
+    <div><div class="eyebrow">Explore the ecosystem</div><h2>Company directory</h2><p>Search across model labs, coding agents, app builders, enterprise copilots, data platforms, AI clouds, integration, observability and AI tooling. Cards link directly to official company or product websites.</p></div>
     <span class="live">Interactive directory</span>
   </div>
   <div class="toolbar">
     <div class="search"><input id="search" type="search" placeholder="Search companies, products, capabilities…" aria-label="Search companies"></div>
-    <select id="sort" aria-label="Sort companies"><option value="name">Sort: A to Z</option><option value="category">Sort: Category</option></select>
+    <select id="sort" aria-label="Sort companies"><option value="name">Sort: A to Z</option><option value="category">Sort: Category</option><option value="popularity">Sort: Popularity</option></select>
+    <button class="btn reset-btn" id="resetFilters" type="button">Reset filters ↺</button>
+  </div>
+  <div class="popularity-filter-wrap">
+    <div class="filter-label">FILTER BY POPULARITY</div>
+    <div class="popularity-filter" id="popularityFilters" role="group" aria-label="Filter companies by popularity"></div>
   </div>
   <div class="chips" id="filters"></div>
+  <div class="popularity-legend" aria-label="Popularity legend">
+    <span class="legend-title">MARKET VISIBILITY</span>
+    <span class="tier-pill tier-high">High popularity</span>
+    <span class="tier-pill tier-moderate">Moderate popularity</span>
+    <span class="tier-pill tier-low">Less popular / niche</span>
+  </div>
+  <p class="tier-summary">Popularity is an editorial estimate of public recognition, ecosystem presence and category visibility—not market share, revenue, product quality or a formal analyst ranking. “Less popular / niche” can still mean a strong specialist.</p>
   <div class="results-meta"><span id="resultCount">Showing companies</span><span>Official company websites · direct links</span></div>
   <div class="cards" id="cards"></div>
   <div class="empty" id="empty">No matches. Try a different company, product or category.</div>
@@ -209,7 +254,7 @@ select{background:#111a2b;border:1px solid var(--line);border-radius:10px;color:
 <footer class="footer">
   <div><strong>AGENT ATLAS</strong><br>AI agent builder market intelligence</div>
   <div class="disclaimer">Research note: This is a curated landscape, not an exhaustive census or financial ranking. Company products and positioning change frequently. Verify current product availability, funding, revenue and customer claims against company disclosures and independent research before making investment or procurement decisions.</div>
-  <div>Edition 02 · November 2026</div>
+  <div>Edition 03 · November 2026</div>
 </footer>
 </div>
 <script>
@@ -225,8 +270,8 @@ const data = [
 ["Glean","Glean Agents","Enterprise platforms","Enterprise search, knowledge and action agents","G"],
 ["Writer","Action","Enterprise platforms","Governed enterprise agents and workflow automation","W"],
 ["Moveworks","AI Assistant / Agent Studio","Enterprise platforms","Employee support and enterprise knowledge workflows","M"],
-["Snowflake","Cortex Agents","Enterprise platforms","Agents grounded in enterprise data and analytics","SF"],
-["Databricks","Agent Bricks","Enterprise platforms","Build and optimize agents on enterprise data","DB"],
+["Snowflake","Cortex Agents / Snowflake Intelligence / CoCo","Data & AI platforms","AI agents, governed enterprise data, Cortex AI services and the CoCo data-native coding agent","SF"],
+["Databricks","Agent Bricks / Genie","Data & AI platforms","Develop, deploy, evaluate and govern production agents on the Databricks Data Intelligence Platform","DB"],
 ["Boomi","Agentstudio","Enterprise platforms","Agent building with integration and orchestration","B"],
 ["Camunda","Camunda 8","Enterprise platforms","Orchestration of human, system and agent workflows","C"],
 ["Automation Anywhere","Agentic Process Automation","Enterprise platforms","Enterprise automation combining agents and RPA","AA"],
@@ -234,16 +279,39 @@ const data = [
 ["Dataiku","Dataiku AI Platform","Enterprise platforms","Enterprise AI development, governance and agents","D"],
 ["DataRobot","Agentic AI Platform","Enterprise platforms","AI lifecycle, deployment and agent operations","DR"],
 ["Workato","Agent Studio","Enterprise platforms","Enterprise integration and business process agents","WO"],
+["Claude Code","Claude Code","AI coding agents & app builders","Anthropic's agentic coding tool for terminal, IDE, web and multi-step software engineering tasks","CC"],
+["OpenAI Codex","Codex","AI coding agents & app builders","OpenAI's coding agent for implementing features, debugging, refactoring and code review","OC"],
+["Cursor","Cursor Agent","AI coding agents & app builders","AI-native code editor with codebase-aware agents, terminal execution and cloud agents","CU"],
+["GitHub Copilot","GitHub Copilot","AI coding agents & app builders","Coding agent across the IDE, CLI, GitHub issues, pull requests, code review and agent workflows","GH"],
+["Lovable","Lovable","AI coding agents & app builders","Prompt-driven full-stack app and website builder with code ownership and integrations","LO"],
+["Bolt.new","Bolt.new","AI coding agents & app builders","Browser-based full-stack coding agent to prompt, run, edit and deploy applications","BN"],
+["v0 by Vercel","v0","AI coding agents & app builders","Generates full-stack web apps and UI, connects repositories and deploys to Vercel","V0"],
+["Google Jules","Jules","AI coding agents & app builders","Asynchronous coding agent that works in cloud VMs, tests changes and opens pull requests","JU"],
+["Amazon Q Developer","Amazon Q Developer","AI coding agents & app builders","AWS-focused coding assistant and agent for implementation, testing, refactoring and upgrades; AWS has announced IDE-plugin support ends April 30, 2027, with Kiro positioned as the newer agentic IDE","AQ"],
+["JetBrains Junie","Junie","AI coding agents & app builders","Autonomous coding agent inside JetBrains IDEs and the terminal","JJ"],
+["Kiro","Kiro IDE / CLI / Web","AI coding agents & app builders","AWS agentic engineering environment that turns prompts into specs, code, tests and documentation","KI"],
+["Cline","Cline","AI coding agents & app builders","Open-source coding agent for IDE, desktop, terminal and SDK with model choice and human approval","CL"],
+["Aider","Aider","AI coding agents & app builders","Open-source terminal pair programmer with codebase mapping, Git integration and model flexibility","AI"],
+["Tabnine","Tabnine","AI coding agents & app builders","Enterprise AI coding assistant with code generation, review and private-code customization","TA"],
+["CodeRabbit","CodeRabbit","AI coding agents & app builders","AI code review agent for pull requests and software quality workflows","CRB"],
+["Qodo","Qodo","AI coding agents & app builders","AI code integrity platform for code review, generation and testing","QO"],
+["Gemini Code Assist","Gemini Code Assist","AI coding agents & app builders","Google's AI coding assistant for IDEs, code generation, review and development workflows","GCA"],
+["GitLab Duo","GitLab Duo","AI coding agents & app builders","AI-powered software development assistance and agent capabilities across GitLab","GLD"],
+["Microsoft Copilot","Microsoft Copilot","AI productivity assistants","General-purpose Microsoft AI assistant for web and productivity experiences","MC"],
+["Microsoft 365 Copilot","Microsoft 365 Copilot","AI productivity assistants","Work assistant embedded across Microsoft 365 apps, enterprise content and workflows","M365"],
+["Microsoft Copilot Studio","Copilot Studio","Enterprise platforms","Low-code environment to build, connect, publish and govern agents and workflows","MCS"],
+["MuleSoft","Agent Fabric / Anypoint Platform","Integration & observability","Integration and agent control plane to discover, connect, govern and orchestrate agents, APIs and MCP tools","MU"],
+["Datadog","Bits AI / LLM Observability","Integration & observability","Observability platform with AI agents for investigation and remediation plus LLM tracing and evaluation","DD"],
 ["Sierra","Sierra Agents","AI-native applications","Customer-facing agents for service experiences","SI"],
-["Cognition","Devin","AI-native applications","Autonomous software engineering agent","CO"],
+["Cognition","Devin","AI coding agents & app builders","Autonomous software engineering agent","CO"],
 ["Decagon","Decagon AI","AI-native applications","AI agents for customer support operations","DE"],
 ["Cresta","Cresta AI","AI-native applications","Contact center agents and real-time agent assist","CR"],
 ["Manus","Manus","AI-native applications","General-purpose task execution agent","MA"],
 ["Harvey","Harvey AI","AI-native applications","Legal research, drafting and professional workflows","H"],
 ["Ema","Universal AI Employee","AI-native applications","Enterprise digital workers and workflow agents","E"],
-["Factory","Droids","AI-native applications","AI agents for software engineering teams","F"],
-["Replit","Replit Agent","AI-native applications","Build and deploy applications with an AI agent","R"],
-["Augment Code","Augment Agent","AI-native applications","AI coding for large and complex codebases","AC"],
+["Factory","Droids","AI coding agents & app builders","AI agents for software engineering teams","F"],
+["Replit","Replit Agent","AI coding agents & app builders","Build and deploy applications with an AI agent","R"],
+["Augment Code","Augment Agent","AI coding agents & app builders","AI coding for large and complex codebases","AC"],
 ["Genspark","Super Agent","AI-native applications","Research and multi-step task execution","GS"],
 ["Lindy","Lindy AI","AI-native applications","Personal and business workflow agents","L"],
 ["11x","Alice / Jordan","AI-native applications","AI sales development and outbound workflows","11"],
@@ -458,10 +526,31 @@ const filters=document.getElementById("filters");
 const cards=document.getElementById("cards");
 const search=document.getElementById("search");
 const sort=document.getElementById("sort");
+let selectedTier="All tiers";
 function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function renderFilters(){
  filters.innerHTML=categories.map(c=>`<button class="chip ${c===active?"active":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
- filters.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{active=b.dataset.cat;renderFilters();renderCards()}));
+ filters.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{active=b.dataset.cat;renderFilters();renderPopularityFilters();renderCards()}));
+}
+function renderPopularityFilters(){
+ const host=document.getElementById("popularityFilters");
+ const counts={high:0,moderate:0,low:0};
+ data.forEach(company=>{
+   if(active!=="All categories" && company[2]!==active) return;
+   counts[getPopularity(company)]++;
+ });
+ const options=[
+   {value:"All tiers",key:"all",label:"All popularity",count:counts.high+counts.moderate+counts.low},
+   {value:"high",key:"high",label:"High popularity",count:counts.high},
+   {value:"moderate",key:"moderate",label:"Moderate popularity",count:counts.moderate},
+   {value:"low",key:"low",label:"Less popular / niche",count:counts.low}
+ ];
+ host.innerHTML=options.map(o=>`<button type="button" class="tier-filter-btn ${selectedTier===o.value?"active":""}" data-tier="${o.value}" aria-pressed="${selectedTier===o.value}"><span>${o.label}</span><span class="count">${o.count}</span></button>`).join("");
+ host.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+   selectedTier=b.dataset.tier==="all"?"All tiers":b.dataset.tier;
+   renderPopularityFilters();
+   renderCards();
+ }));
 }
 // Direct company-owned homepages. No search-engine fallback is used.
 const officialProfiles={
@@ -476,8 +565,8 @@ const officialProfiles={
   "Glean": "https://www.glean.com/",
   "Writer": "https://writer.com/",
   "Moveworks": "https://www.moveworks.com/",
-  "Snowflake": "https://www.snowflake.com/",
-  "Databricks": "https://www.databricks.com/",
+  "Snowflake": "https://www.snowflake.com/en/product/features/cortex/",
+  "Databricks": "https://www.databricks.com/product/artificial-intelligence/agent-bricks",
   "Boomi": "https://boomi.com/",
   "Camunda": "https://camunda.com/",
   "Automation Anywhere": "https://www.automationanywhere.com/",
@@ -581,6 +670,32 @@ const officialProfiles={
   "Temporal": "https://temporal.io/",
   "Inngest": "https://www.inngest.com/",
 
+  // AI coding agents and app builders
+  "Claude Code":"https://claude.com/product/claude-code",
+  "OpenAI Codex":"https://openai.com/codex/",
+  "Cursor":"https://cursor.com/",
+  "GitHub Copilot":"https://github.com/features/copilot",
+  "Lovable":"https://lovable.dev/",
+  "Bolt.new":"https://bolt.new/",
+  "v0 by Vercel":"https://v0.app/",
+  "Google Jules":"https://jules.google/",
+  "Amazon Q Developer":"https://aws.amazon.com/q/developer/",
+  "JetBrains Junie":"https://junie.jetbrains.com/",
+  "Kiro":"https://kiro.dev/",
+  "Cline":"https://cline.bot/",
+  "Aider":"https://aider.chat/",
+  "Tabnine":"https://www.tabnine.com/ai-code-assistant/",
+  "CodeRabbit":"https://www.coderabbit.ai/",
+  "Qodo":"https://qodo.ai/",
+  "Gemini Code Assist":"https://cloud.google.com/products/gemini/code-assist",
+  "GitLab Duo":"https://about.gitlab.com/solutions/gitlab-duo/",
+  // Microsoft productivity and agent-building products
+  "Microsoft Copilot":"https://copilot.microsoft.com/",
+  "Microsoft 365 Copilot":"https://www.microsoft.com/en-us/microsoft-365/copilot/",
+  "Microsoft Copilot Studio":"https://www.microsoft.com/en/copilot/microsoft-copilot-studio",
+  // Integration and observability
+  "MuleSoft":"https://www.mulesoft.com/ai/agent-fabric",
+  "Datadog":"https://www.datadoghq.com/products/ai/agent-observability/",
   // Frontier model labs
   "OpenAI":"https://openai.com/",
   "Anthropic":"https://www.anthropic.com/",
@@ -707,24 +822,100 @@ function displayDomain(url){
  catch { return "Official website"; }
 }
 
+// Qualitative visibility tiers. High = broad market visibility; moderate = established specialist;
+// less = emerging or narrower niche visibility. These are not measured market-share bands.
+const highVisibility = new Set([
+  "Salesforce","ServiceNow","IBM","Oracle","SAP","UiPath","Palantir","Glean","Snowflake","Databricks","MuleSoft","Datadog",
+  "Sierra","Cognition","Decagon","Manus","Harvey","Replit","Genspark","Abridge",
+  "Claude Code","OpenAI Codex","Cursor","GitHub Copilot","Lovable","Bolt.new","v0 by Vercel","Google Jules","Amazon Q Developer","Microsoft Copilot","Microsoft 365 Copilot","Microsoft Copilot Studio","Gemini Code Assist","Kiro",
+  "LangChain","CrewAI","LlamaIndex","Microsoft","Vercel","Botpress","Rasa",
+  "n8n","Zapier","Make","Dust",
+  "Intercom","ElevenLabs","Gorgias",
+  "Gong","Outreach","Salesloft","Apollo.io","6sense","HubSpot","ZoomInfo","Clay",
+  "Ironclad","Eightfold AI","Paradox","Tines","Torq","Arize AI","Temporal",
+  "OpenAI","Anthropic","Google DeepMind","Meta AI","xAI","Mistral AI","Cohere","DeepSeek","Alibaba Qwen","Amazon Nova","Microsoft AI","NVIDIA Nemotron","Apple Machine Learning","ByteDance Seed","Black Forest Labs","Thinking Machines Lab",
+  "CoreWeave","Lambda","Together AI","Fireworks AI","Baseten","Runpod","Replicate","GroqCloud","Cerebras Inference","Cloudflare Workers AI","Hugging Face Inference","AWS Bedrock","Microsoft Azure AI Foundry","Google Cloud Vertex AI",
+  "NVIDIA Compute","AMD","Intel","Cerebras Systems","Groq","Qualcomm","Broadcom","Arm",
+  "Pinecone","Redis","Elastic","MongoDB","Supabase",
+  "Weights & Biases","Airbyte","Fivetran"
+]);
+const lowVisibility = new Set([
+  "Relay.app (retired)","PraisonAI","Norm AI","Bevaya (Roots Automation)","Noma Security",
+  "Novita AI","Featherless AI","Nscale","Etched","d-Matrix","Lightmatter","Astera Labs",
+  "Marqo","Activeloop","Turbopuffer","Liquid AI","Reflection AI","Reka AI","StepFun","01.AI",
+  "Patronus AI","ClearML","Comet","AgentOps"
+]);
+function getPopularity(company){
+  const name=company[0];
+  if(highVisibility.has(name)) return "high";
+  if(lowVisibility.has(name)) return "low";
+  return "moderate";
+}
+function popularityLabel(tier){
+  return tier==="high" ? "High popularity" : tier==="low" ? "Less popular / niche" : "Moderate popularity";
+}
+function popularityAnnotation(tier, category){
+  const segmentNotes={
+    "Enterprise platforms":"Visibility is driven mainly by enterprise distribution, installed-base reach and established workflow relationships.",
+    "AI-native applications":"Visibility reflects attention around a purpose-built AI product and its target workflow.",
+    "Developer frameworks":"Visibility is shaped by developer mindshare, community use and ecosystem integrations.",
+    "Workflow builders":"Visibility reflects ease of adoption, connector breadth and automation-community awareness.",
+    "Customer & voice agents":"Visibility reflects recognition in customer experience, contact-center and voice automation markets.",
+    "Sales & GTM agents":"Visibility reflects presence in sales technology, revenue operations and go-to-market teams.",
+    "Vertical agents":"Visibility is assessed within a specialized industry rather than across all of AI.",
+    "Agent infrastructure":"Visibility reflects developer and enterprise awareness of the supporting production stack.",
+    "Frontier model labs":"Visibility is influenced by model awareness, research presence and developer/API ecosystem reach.",
+    "AI cloud & inference":"Visibility reflects awareness among teams buying GPU capacity, inference APIs and managed model services.",
+    "AI chips & compute":"Visibility reflects recognition in accelerator, semiconductor and AI data-center ecosystems.",
+    "Data & vector infrastructure":"Visibility reflects adoption awareness in databases, search, retrieval and RAG architecture.",
+    "AI developer & MLOps tooling":"Visibility reflects recognition among ML engineers and teams operating AI systems.",
+    "AI coding agents & app builders":"Visibility reflects developer mindshare, software engineering adoption, app-builder usage and integration into coding workflows.",
+    "Data & AI platforms":"Visibility reflects enterprise data-platform adoption, governance, analytics and AI agent development capabilities.",
+    "AI productivity assistants":"Visibility reflects reach across knowledge workers, productivity suites and workplace software ecosystems.",
+    "Integration & observability":"Visibility reflects enterprise integration, API management, telemetry, incident response and AI operations adoption."
+  };
+  const tierNote=tier==="high"
+    ? "Broad recognition and strong ecosystem presence; usually familiar to a wide range of AI buyers, builders or enterprise teams."
+    : tier==="low"
+      ? "More emerging or narrowly specialized visibility; recognition may be concentrated in a specific technical or industry niche. This is not a quality judgment."
+      : "Established specialist with meaningful visibility in its segment, though less universal recognition than the most widely known platforms.";
+  return `${tierNote} ${segmentNotes[category] || "Visibility reflects public recognition and ecosystem presence."}`;
+}
+
 function renderCards(){
  const q=search.value.trim().toLowerCase();
- let list=data.filter(x=>(active==="All categories"||x[2]===active)&&x.join(" ").toLowerCase().includes(q));
- list.sort((a,b)=>sort.value==="category"?(a[2]+a[0]).localeCompare(b[2]+b[0]):a[0].localeCompare(b[0]));
+ let list=data.filter(x=>{
+   const tier=getPopularity(x);
+   return (active==="All categories"||x[2]===active) &&
+          (selectedTier==="All tiers"||tier===selectedTier) &&
+          (x.join(" ")+" "+popularityAnnotation(tier,x[2])).toLowerCase().includes(q);
+ });
+ const rank={high:0,moderate:1,low:2};
+ list.sort((a,b)=>sort.value==="category"?(a[2]+a[0]).localeCompare(b[2]+b[0]):sort.value==="popularity"?(rank[getPopularity(a)]-rank[getPopularity(b)]||a[0].localeCompare(b[0])):a[0].localeCompare(b[0]));
  document.getElementById("resultCount").textContent=`Showing ${list.length} of ${data.length} companies`;
  document.getElementById("companyCount").textContent=data.length;
  document.getElementById("segmentCount").textContent=categories.length-1;
- cards.innerHTML=list.map(x=>`<article class="company">
-  <div class="cardtop"><div class="logo">${esc(x[4])}</div><span class="tag">${esc(x[2])}</span></div>
-  <h3>${esc(x[0])}</h3><div class="product">${esc(x[1])}</div>
-  <p class="desc">${esc(x[3])}</p>
-  <div class="cardfoot"><span class="signal"><i class="dot"></i> Market participant</span>${profileUrl(x) ? `<a class="profile-link" href="${profileUrl(x)}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${esc(x[0])} official website">${esc(displayDomain(profileUrl(x)))} ↗</a>` : `<span class="profile-link unavailable">Website not verified</span>`}</div>
- </article>`).join("");
+ cards.innerHTML=list.map(x=>{
+  const tier=getPopularity(x);
+  const color=tier==="high"?"#7ce7b2":tier==="low"?"#b7a0ff":"#f5c779";
+  const url=profileUrl(x);
+  return `<article class="company tier-${tier}-card">
+   <div class="cardtop"><div class="logo">${esc(x[4])}</div><div class="card-meta"><span class="tag">${esc(x[2])}</span><span class="tier-pill tier-${tier}">${popularityLabel(tier)}</span></div></div>
+   <h3>${esc(x[0])}</h3><div class="product">${esc(x[1])}</div>
+   <p class="desc">${esc(x[3])}</p>
+   <div class="annotation" style="--annotation:${color}"><b>Market annotation:</b> ${esc(popularityAnnotation(tier,x[2]))}</div>
+   <div class="cardfoot"><span class="signal"><i class="dot" style="background:${color}"></i> ${popularityLabel(tier)}</span>${url ? `<a class="profile-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${esc(x[0])} official website">${esc(displayDomain(url))} ↗</a>` : `<span class="profile-link unavailable">Website not verified</span>`}</div>
+  </article>`;
+ }).join("");
  document.getElementById("empty").style.display=list.length?"none":"block";
  cards.style.display=list.length?"grid":"none";
 }
 search.addEventListener("input",renderCards);sort.addEventListener("change",renderCards);
-renderFilters();renderCards();
+document.getElementById("resetFilters").addEventListener("click",()=>{
+  search.value="";sort.value="name";active="All categories";selectedTier="All tiers";
+  renderFilters();renderPopularityFilters();renderCards();
+});
+renderFilters();renderPopularityFilters();renderCards();
 </script>
 </body>
 </html>

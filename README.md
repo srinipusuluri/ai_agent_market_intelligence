@@ -75,7 +75,7 @@ The portal intentionally does not assign fabricated market-share percentages. Me
 No installation is necessary.
 
 1. Download or clone this repository.
-2. Open `agent_atlas_market_intelligence.html` in a modern web browser.
+2. Open [`agent_atlas_market_intelligence.html`](https://srinipusuluri.github.io/ai_agent_market_intelligence/) in a modern web browser.
 3. Search the directory, select a category, choose a popularity tier, or change the sort order.
 
 The portal is a static client-side page. It does not require a backend, API key, database or environment variables.
